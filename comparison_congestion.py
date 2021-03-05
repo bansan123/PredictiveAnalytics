@@ -28,7 +28,7 @@ def model():
 
     #code for extracting data for particular time
     hour = df_intensidad_1.index.hour
-    selector_new = (( 01 <= hour) & (hour <= 23))
+    selector_new = (( 1 <= hour) & (hour <= 23))
     df_total_1 = df_intensidad_1[selector_new]
 
 

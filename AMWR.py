@@ -22,7 +22,7 @@ TrainingWindow = 15
 def pre_processing(df):
     #code for extracting data for particular time
     hour = df.index.hour
-    selector_new = (( 01 <= hour) & (hour <= 23))
+    selector_new = (( hour >= 1) & (hour <= 23))
     df1 = df[selector_new]
 
 
@@ -46,8 +46,8 @@ def error_model(data):
     #fitting norm dist
     mu1, std1 = norm.fit(data, floc=0)
 
-    print ' T dist parameteres are', a, mu, std
-    print 'Gaussian parameters are', mu1, std1
+    print(' T dist parameteres are', a, mu, std)
+    print('Gaussian parameters are', mu1, std1)
 
 
     plt.figure()
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
 
     #reading csv file into DataFrame object
-    dfa = pd.read_csv('/home/adnan/Desktop/cosmos/Madrid data set/2014/03-2014.csv', parse_dates=['fecha'], index_col='fecha', sep = ';')
+    dfa = pd.read_csv('./03-2014/03-2014.csv', parse_dates=['fecha'], index_col='fecha', sep = ';')
 
     dfa = dfa[dfa['identif'] == 'PM10344']
     df_intensidad_1 = dfa[['vmed']]
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     for i in range(len(Y)):
         X.append([i])
 
-    print X
+    print(X)
 
     #initializes the model
     svr_rbf = SVR(kernel='rbf', C=1e3, gamma=0.1)
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     MAPEArray = np.asarray(MAPE)
 
 
-    print 'error is', MAPEArray.mean()
+    print('error is', MAPEArray.mean())
 
     #Extracting data for testing and plotting
     Y_testing = Y[TrainingWindow:]
@@ -249,7 +249,7 @@ if __name__ == "__main__":
     plt.plot(X_predicted, Y_predicted, c='b', label = 'AMWR using SVR')
     #plt.scatter(X_predicted, Y_predicted, c='red', label = 'Predicted data')
 
-    print 'length of testing and prediction array is', len(Y_testing), len(Y_predicted)
+    print('length of testing and prediction array is', len(Y_testing), len(Y_predicted))
 
     x_step =[]
     for i in range(len(PredictionWindowArray)):

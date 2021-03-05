@@ -4,9 +4,9 @@ __author__ = 'adnan'
 and applies AMWR to predict next three readings'''
 
 
-import urllib2
+# import urllib2
 import xml.etree.ElementTree as ET
-import urllib
+import urllib.request
 import re
 import io, random
 import pandas as pd
@@ -24,13 +24,14 @@ time_sampling = 300	#Should be equal to data refreshing time
 
 #function to read data
 def data_traffic_read():
-    req = urllib2.Request(url='http://informo.munimadrid.es/informo/tmadrid/pm.xml')
+    req = urllib.request.Request(url='http://informo.munimadrid.es/informo/tmadrid/pm.xml')
 
-    f = urllib2.urlopen(req)
+    f = urllib.request.urlopen(req)
     xml_str = f.read()
     root = ET.fromstring(xml_str)
     list = []
     for location in root.findall('pm'):
+        print(location)
         codigo = location.find('codigo').text
         #here if statement can be added to look for IDs with PM and publish it
         #into different topic
@@ -73,7 +74,7 @@ def pred(df):
         time_last = index
 
 
-    print "time_last is {}".format(time_last)
+    print("time_last is {}".format(time_last))
     #extracting time for next 3 predictions
 
     X_pred = []
@@ -108,8 +109,8 @@ def AMWR(df):
 
 
     for i in range(3):
-        print "Expected traffic speed at {}:{} is {}".format(X_speed[i][0], X_speed[i][1], int(Y_speed[i]))
-        print "Expected traffic intensity at {}:{} is {}".format(X_intensity[i][0], X_intensity[i][1], int(Y_intensity[i]))
+        print ("Expected traffic speed at {}:{} is {}".format(X_speed[i][0], X_speed[i][1], int(Y_speed[i])))
+        print ("Expected traffic intensity at {}:{} is {}".format(X_intensity[i][0], X_intensity[i][1], int(Y_intensity[i])))
 
 
 #main function
@@ -126,14 +127,14 @@ if __name__ == '__main__':
         #print len(df1)
 
         if len(df1) >= TrainingWindow:
-            print "calling prediction algo"
-            print "df1 is ", df1
+            print("calling prediction algo")
+            print("df1 is ", df1)
             AMWR(df1)
 
         else:
             pass
 
-        print "i am sleeping"
+        print("i am sleeping")
         time.sleep(time_sampling)
 
 

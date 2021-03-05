@@ -28,7 +28,7 @@ df = pd.DataFrame()
 
 
 #reading csv file into DataFrame object
-dfa = pd.read_csv('/home/adnan/Desktop/Madrid data set/2014/03-2014.csv', parse_dates=['fecha'], index_col='fecha', sep = ';')
+dfa = pd.read_csv('./03-2014/03-2014.csv', parse_dates=['fecha'], index_col='fecha', sep = ';')
 
 dfa = dfa[dfa['identif'] == 'PM10344']
 
@@ -37,7 +37,7 @@ df_intensidad_1 = dfa[['intensidad']]
 
 #code for extracting data for particular time
 hour = df_intensidad_1.index.hour
-selector_new = (( 01 <= hour) & (hour <= 23))
+selector_new = (( 1 <= hour) & (hour <= 23))
 df_total_1 = df_intensidad_1[selector_new]
 
 
@@ -95,8 +95,8 @@ for i in range(len(hours)):
 
 
 
-print len(X), len(Y)
-print X, Y
+print(len(X), len(Y))
+print(X, Y)
 X_predicted = []
 Y_predicted = []
 
@@ -160,7 +160,7 @@ for i in models:
 
     #converting in an array
     TempError1 = np.asarray(TempError)
-    print counter
+    print(counter)
 
     #taking mean
     TempMAPE = (TempError1.mean())*100
@@ -169,7 +169,7 @@ for i in models:
     #print TrueError
 TotalError.append(TrueError)
 
-print TotalError
+print(TotalError)
 
 
 
